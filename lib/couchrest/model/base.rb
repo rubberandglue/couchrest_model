@@ -38,6 +38,10 @@ module CouchRest
         subclasses << subklass
       end
 
+      def self.model_type_string
+        to_s.send(model_type_modification)
+      end
+
       # Instantiate a new CouchRest::Model::Base by preparing all properties
       # using the provided document hash.
       #
@@ -54,7 +58,7 @@ module CouchRest
         # set the instance's database, if provided
         self.database = options[:database] unless options[:database].nil?
         unless self['_id'] && self['_rev']
-          self[self.model_type_key] = self.class.to_s.send(model_type_modification)
+          self[self.model_type_key] = self.class.model_type_string
         end
 
         yield self if block_given?

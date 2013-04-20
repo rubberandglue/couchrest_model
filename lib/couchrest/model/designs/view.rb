@@ -460,7 +460,7 @@ module CouchRest
             if name.to_s == 'all'
               opts[:map] = <<-EOF
                 function(doc) {
-                  if (doc['#{model.model_type_key}'] == '#{model.to_s}') {
+                  if (doc['#{model.model_type_key}'] == '#{model.model_type_string}') {
                     emit(doc._id, null);
                   }
                 }
@@ -473,7 +473,7 @@ module CouchRest
 
               opts[:allow_blank] = opts[:allow_blank].nil? ? true : opts[:allow_blank]
               opts[:guards] ||= []
-              opts[:guards].push "(doc['#{model.model_type_key}'] == '#{model.to_s}')"
+              opts[:guards].push "(doc['#{model.model_type_key}'] == '#{model.model_type_string}')"
 
               keys = opts[:by].map{|o| "doc['#{o}']"}
               emit = keys.length == 1 ? keys.first : "[#{keys.join(', ')}]"

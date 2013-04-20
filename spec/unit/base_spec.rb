@@ -60,6 +60,10 @@ describe "Model Base" do
       @doc[WithDefaultValues.model_type_key].should eql('WithDefaultValues')
     end
 
+    it "should return the model type string", focus: true do
+      WithDefaultValues.model_type_string.should eql('WithDefaultValues')
+    end
+
     it "should call after_initialize method if available" do
       @doc = WithAfterInitializeMethod.new
       @doc['some_value'].should eql('value')
