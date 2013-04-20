@@ -24,6 +24,10 @@ describe CouchRest::Model::Persistence do
       doc.class.should eql(WithTemplateAndUniqueID)
     end
 
+    it "should instantialize with classify", focus: true do
+      doc = Article.build_from_database({'_id' => 'testitem2', '_rev' => 123, 'type' => 'article', 'name' => 'my test'})
+      doc.class.should eql(Article)
+    end
   end
 
   describe "basic saving and retrieving" do
