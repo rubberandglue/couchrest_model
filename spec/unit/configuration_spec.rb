@@ -18,13 +18,13 @@ describe CouchRest::Model::Configuration do
   end
 
   describe '.add_config' do
-    
+
     it "should add a class level accessor" do
       @class.add_config :foo_bar
       @class.foo_bar = 'foo'
       @class.foo_bar.should == 'foo'
     end
-    
+
     ['foo', :foo, 45, ['foo', :bar]].each do |val|
       it "should be inheritable for a #{val.class}" do
         @class.add_config :foo_bar
@@ -40,14 +40,14 @@ describe CouchRest::Model::Configuration do
         @class.foo_bar.should == val
       end
     end
-    
-    
+
+
     it "should add an instance level accessor" do
       @class.add_config :foo_bar
       @class.foo_bar = 'foo'
       @class.new.foo_bar.should == 'foo'
     end
-    
+
     it "should add a convenient in-class setter" do
       @class.add_config :foo_bar
       @class.foo_bar "monkey"
@@ -74,4 +74,12 @@ describe CouchRest::Model::Configuration do
     end
   end
 
+  describe "model type key modification" do
+    it "should modify model type", :focus => true do
+      CouchRest::Model::Base.configure do |config|
+        config.model_type_modification = :downcase
+      end
+      Cat.new[:type].should == 'cat'
+    end
+  end
 end
